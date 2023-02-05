@@ -54,7 +54,7 @@ fun Greeting(name: String) {
             modifier = Modifier.align(Alignment.Start)
         )
         Text(
-            text = "Some other text2",
+            text = "Some other text3",
             color = Color.Blue,
             fontSize = 30.sp,
             modifier = Modifier.align(Alignment.End)
