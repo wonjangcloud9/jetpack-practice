@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 if (name.isNotBlank()) {
                                     names = names + name
+                                    name = ""
                                 }
 
                             },
@@ -55,13 +56,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    LazyColumn {
-                        items(names) { currentName ->
-                            Text(text = currentName, fontSize = 20.sp)
-                            Divider()
-                        }
-
-                    }
+                    nameList(names)
                 }
             }
         }
@@ -85,5 +80,23 @@ fun Greeting(name: String) {
 fun DefaultPreview() {
     PracticeTheme {
         Greeting("Android")
+    }
+}
+
+@Composable
+fun nameList(
+    names: List<String>,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(modifier = modifier) {
+        items(names) { currentName ->
+            Text(
+                text = currentName,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+            Divider()
+        }
     }
 }
