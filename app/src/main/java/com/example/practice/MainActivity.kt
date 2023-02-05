@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
@@ -16,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.practice.ui.theme.PracticeTheme
 
@@ -24,22 +24,43 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PracticeTheme {
-                var count by remember {
-                    mutableStateOf(0)
-                }
+                var name by remember { mutableStateOf("") }
+                var names by remember { mutableStateOf(listOf<String>()) }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.White),
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = count.toString(),
-                        fontSize = 30.sp,
-                    )
-                    Button(onClick = { count++ }) {
-                        Text(text = "Click me")
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        OutlinedTextField(
+                            value = name,
+                            onValueChange = { text ->
+                                name = text
+                            },
+                        )
+                        Button(
+                            onClick = {
+                                if (name.isNotBlank()) {
+                                    names = names + name
+                                }
+
+                            },
+                        ) {
+                            Text(text = "Add", fontSize = 20.sp)
+                        }
+                    }
+
+                    LazyColumn {
+                        items(names) { currentName ->
+                            Text(text = currentName, fontSize = 20.sp)
+                            Divider()
+                        }
+
                     }
                 }
             }
